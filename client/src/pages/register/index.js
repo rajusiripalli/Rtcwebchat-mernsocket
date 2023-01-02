@@ -6,7 +6,7 @@ import { RegisterUser } from "../../apicalls/users";
 
 
 function Register() {
-
+    const navigate = useNavigate();
     const [user, setUser] = React.useState({
         name: "",
         email: "",
@@ -33,6 +33,13 @@ function Register() {
       }    
   }
   
+  
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div className="h-screen bg-primary flex items-center justify-center">
       <div className="bg-white shadow-md p-5 flex flex-col gap-5 w-96">

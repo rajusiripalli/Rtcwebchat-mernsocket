@@ -68,8 +68,19 @@ const login = async (req, res) => {
  
  }
 
+ const getcurrentUser = async (req, res) => {
+    try {
+        const user = req.user;
+        res.status(StatusCodes.OK).json({status: true, message: "user data fetched successfully", data: user})
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({status: false, message: error.message})
+
+    }
+ }
+
 
 module.exports = {
     register,
-    login
+    login, 
+    getcurrentUser
 }

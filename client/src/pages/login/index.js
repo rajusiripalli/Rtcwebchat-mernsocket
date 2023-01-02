@@ -7,7 +7,7 @@ import { LoginUser } from "../../apicalls/users";
 
 function Login() {
 //   const dispatch = useDispatch();
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = React.useState({
     email: "",
     password: "",
@@ -22,7 +22,7 @@ function Login() {
       if (response.status) {
         toast.success(response.message);
         localStorage.setItem("token", response.token);
-        window.location.href = "/";
+        navigate("/");
       } else {
         toast.error(response.message);
 
@@ -34,7 +34,11 @@ function Login() {
     }
   };
 
-
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="h-screen bg-primary flex items-center justify-center">
