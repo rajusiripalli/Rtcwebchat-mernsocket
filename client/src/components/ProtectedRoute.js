@@ -2,15 +2,21 @@ import React, {useEffect, useState} from 'react'
 import {GetCurrentUser} from '../apicalls/users';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
+import { HideLoader, ShowLoader } from "../redux/loaderSlice";
+import { useDispatch } from 'react-redux';
 
 function ProtectedRoute({children}) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const [user, setUser] = useState('');
 
     const getCurrentUser = async () =>{
+          dispatch(ShowLoader())
         try {
             const response = await GetCurrentUser();
+            dispatch(HideLoader())
             if(response.status){
                 console.log("get current data ===> ", response.data);
                 setUser(response.data);
@@ -21,7 +27,7 @@ function ProtectedRoute({children}) {
             }
         } catch (error) {
             toast.error(error.message)
-
+            dispatch(HideLoader())
             navigate("/login");
 
         }

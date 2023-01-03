@@ -3,10 +3,10 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apicalls/users";
-// import { HideLoader, ShowLoader } from "../../redux/loaderSlice";
+ import { HideLoader, ShowLoader } from "../../redux/loaderSlice";
 
 function Login() {
-//   const dispatch = useDispatch();
+   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = React.useState({
     email: "",
@@ -15,20 +15,20 @@ function Login() {
 
   const login = async () => {
     try {
-      //dispatch(ShowLoader());
+      dispatch(ShowLoader());
       const response = await LoginUser(user);
-      //dispatch(HideLoader());
+      dispatch(HideLoader());
       console.log("login response ==> ", response);
       if (response.status) {
         toast.success(response.message);
         localStorage.setItem("token", response.token);
-        navigate("/");
+        window.location.href = "/";
       } else {
         toast.error(response.message);
 
       }
     } catch (error) {
-      //dispatch(HideLoader());
+      dispatch(HideLoader());
       toast.error(error.message);
       console.log("catch block error==>", error)
     }
