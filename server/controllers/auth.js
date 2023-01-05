@@ -16,7 +16,7 @@ const {StatusCodes} = require('http-status-codes');
         //create new user
         const newuser = await User.create({...req.body});
         const token = newuser.createJWT()
-        res.status(StatusCodes.CREATED).json({status: true, message: "user created successfully", user: {name: user.name}, token})
+        res.status(StatusCodes.CREATED).json({status: true, message: "user created successfully", data: {name: newuser.name, email: newuser.email}, token})
 
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -78,9 +78,26 @@ const login = async (req, res) => {
     }
  }
 
+ const getallUsers = async (req, res) =>{
+    try {
+        const user = req.user;
+
+        const allUsers = await User.find({ _id: { $ne: user._id } });
+        res.status(StatusCodes.OK).json({
+                status: true, 
+                message: "Users fetched successfully", 
+                data: allUsers
+        })
+      } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({status: false, message: error.message})
+
+      }
+ }
+
 
 module.exports = {
     register,
     login, 
-    getcurrentUser
+    getcurrentUser,
+    getallUsers
 }
