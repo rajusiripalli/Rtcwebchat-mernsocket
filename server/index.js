@@ -4,6 +4,7 @@ const cors = require('cors')
 const express = require('express');
 const app = express();
 const authRouter = require('./routes/authRouter');
+const chatsRoute = require('./routes/chatsRoute')
 
 const PORT = process.env.PORT || 5000;
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.get('/', (req,res) => res.send("server running"))
 
 app.use('/api/user', authRouter);
+app.use("/api/chats", chatsRoute);
 
 
 app.listen(PORT, () =>{

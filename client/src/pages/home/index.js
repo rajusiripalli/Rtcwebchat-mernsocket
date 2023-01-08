@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 // import ChatArea from "./components/ChatArea";
 import UserSearch from "./components/UserSearch";
-// import UsersList from "./components/UsersList";
+import UsersList from "./components/UsersList";
 // import { io } from "socket.io-client";
 
 // const socket = io('https://sheychat-udemy.onrender.com');
@@ -27,11 +27,10 @@ function Home() {
       {/* 1st part   user search , userslist/chatlist */}
       <div className="w-96">
         <UserSearch searchKey={searchKey} setSearchKey={setSearchKey} />
-        {/* <UsersList
+        <UsersList
           searchKey={searchKey}
-          socket={socket}
-          onlineUsers={onlineUsers}
-        /> */}
+      
+        />
       </div>
 
       {/* 2nd part   chatbox */}

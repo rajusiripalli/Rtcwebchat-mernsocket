@@ -1,8 +1,8 @@
-import { axiosInstance } from ".";
+import { axiosInstance, constants} from ".";
 
 export const GetAllChats = async () => {
   try {
-    const response = await axiosInstance.get("/api/chats/get-all-chats");
+    const response = await axiosInstance.get(`${constants.baseURL}/api/chats/get-all-chats`);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export const GetAllChats = async () => {
 
 export const CreateNewChat = async (members) => {
   try {
-    const response = await axiosInstance.post("/api/chats/create-new-chat", {
+    const response = await axiosInstance.post(`${constants.baseURL}/api/chats/create-new-chat`, {
       members,
     });
     return response.data;

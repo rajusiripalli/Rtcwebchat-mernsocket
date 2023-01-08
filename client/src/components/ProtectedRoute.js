@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {GetCurrentUser, GetAllUsers} from '../apicalls/users';
+import { GetAllChats } from "../apicalls/chats";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
 import { HideLoader, ShowLoader } from "../redux/loaderSlice";
 import { useDispatch, useSelector } from 'react-redux';
-import {SetUser, SetAllUsers} from '../redux/userSlice';
+import {SetUser, SetAllUsers, SetAllChats} from '../redux/userSlice';
 
 
 function ProtectedRoute({children}) {
@@ -19,13 +20,16 @@ function ProtectedRoute({children}) {
         try {
             const response = await GetCurrentUser();
             const allUsersResponse = await GetAllUsers();
+            const allChatsResponse = await GetAllChats();
+            console.log("all chats response ===> ", allChatsResponse)
 
             dispatch(HideLoader())
             if(response.status){
                 console.log("get current data ===> ", response.data);
                 dispatch(SetUser(response.data));
                 dispatch(SetAllUsers(allUsersResponse.data));
- 
+                dispatch(SetAllChats(allChatsResponse.data));
+
             }else{
                 toast.error(response.message)
                 navigate('/login');

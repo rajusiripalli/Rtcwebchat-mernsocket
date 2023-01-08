@@ -82,7 +82,7 @@ const login = async (req, res) => {
     try {
         const user = req.user;
 
-        const allUsers = await User.find({ _id: { $ne: user._id } });
+        const allUsers = await User.find({ _id: { $ne: user._id } }).select("-password")
         res.status(StatusCodes.OK).json({
                 status: true, 
                 message: "Users fetched successfully", 
